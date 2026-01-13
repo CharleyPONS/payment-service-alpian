@@ -1,0 +1,57 @@
+server:
+  port: 8080
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    url: /payment-service.yaml
+    path: /swagger-ui
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment
+    username: myuser
+    password: secret
+    jpa:
+      hibernate:
+        ddl-auto: validate
+      show-sql: false
+      properties:
+        hibernate:
+          format_sql: true
+  security:
+    jwt:
+      secret: very-secret-key-for-assessment
+      expiration: 3600
+  kafka:
+    admin:
+      auto-create: true
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        compression.type: snappy
+        max.request.size: 1048576
+        acks: all
+        retries: 3
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+kafka:
+  topics:
+    paymentNotification: paymentservice-alpian-dailybanking-dev
+    requestMaxSize: 1048576
+    compressionType: snappy
+
+outbox:
+  publisher:
+    batch-size: 50
+    max-attempts: 3
+    poll-interval-ms: 1000
+    processing-timeout-ms: 30000
+
+logging:
+  level:
+    org.flywaydb: DEBUG

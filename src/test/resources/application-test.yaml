@@ -1,0 +1,40 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  kafka:
+    admin:
+      auto-create: true
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        compression.type: snappy
+        max.request.size: 1048576
+        acks: all
+        retries: 3
+
+outbox:
+  publisher:
+    batch-size: 3
+    processing-timeout-seconds: 1
+    max-attempts: 3
+    poll-interval-ms: 50
+
+kafka:
+  topics:
+    paymentNotification: test-topic
+    requestMaxSize: 1048576
+    compressionType: snappy
+
+logging:
+  level:
+    root: INFO
