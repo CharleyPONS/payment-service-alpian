@@ -39,12 +39,12 @@ The service is built with **Spring Boot**, **PostgreSQL**, and **Kafka**, and re
 ### Start the service
 
 A `docker-compose.yml` file is available at the project root.
-With Spring Boot 4, Docker services (PostgreSQL and Kafka) are automatically started.
+With Spring Boot 4, Docker services (PostgreSQL and Kafka) are automatically started when using the local profile.
 
 Run from IntelliJ or CLI:
 
 ```bash
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 ---
