@@ -50,7 +50,7 @@ outbox:
     batch-size: 50
     max-attempts: 3
     poll-interval-ms: 1000
-    processing-timeout-ms: 30000
+    processing-timeout-seconds: 30000
 
 logging:
   level:
